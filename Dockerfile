@@ -1,14 +1,9 @@
-FROM ubuntu:utopic
-MAINTAINER thomfab
+FROM alpine
+MAINTAINER broussel
 
-RUN apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends rsync && \
-  apt-get clean autoclean && \
-  apt-get autoremove -y && \
-  rm -rf /var/lib/{apt,dpkg,cache,log}/
+RUN apk add --no-cache rsync
 
 EXPOSE 873
 VOLUME /volume
 ADD ./run.sh /usr/local/bin/run.sh
-RUN chmod +x /usr/local/bin/run.sh
 ENTRYPOINT ["/usr/local/bin/run.sh"]
