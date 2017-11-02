@@ -1,7 +1,8 @@
 FROM alpine
 MAINTAINER broussel
 
-RUN apk add --no-cache rsync
+RUN apk add --no-cache rsync && \
+    rm -f /etc/rsyncd.conf
 
 EXPOSE 873
 VOLUME /volume
