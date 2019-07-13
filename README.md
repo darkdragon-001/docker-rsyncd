@@ -44,6 +44,16 @@ rsync rsync://<docker>:<port>/
 backup          backup
 ```
 
+### USERS
+By default, volumes are exposed without password. If you want users to authenticate use this.
+
+Example :
+```
+docker run -d -p <port>:873 --name rsyncd \
+              -e USERS="user1:password1,user2:password2" \
+              darkdragon001/rsyncd
+```
+
 ### READ ONLY
 By default, volumes are exposed read-write. If you want to protect them read-only, set the environment variable.
 

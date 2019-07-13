@@ -3,6 +3,7 @@
 VOLUME=${VOLUME:-"volume"}
 READONLY=${READONLY:-false}
 ALLOW=${ALLOW:-192.168.0.0/16 172.16.0.0/12 10.0.0.0/8}
+USERS=${USERS:-}
 OWNER=${OWNER:-nobody}
 GROUP=${GROUP:-nogroup}
 
@@ -27,5 +28,16 @@ log file = /dev/stdout
     path = /volume
     comment = ${VOLUME}
 EOF
+
+# create authentification information to rsync daemon
+if [ -n "${USERS}" ]; then
+    echo ${USERS} | tr ',' '\n' > ./rsyncd.secrets
+    chmod 400 ./rsyncd.secrets
+    chown "${USER}":"${GROUP}" ./rsyncd.secrets
+    USERS=$(echo ${USERS} | sed -r 's/:[^,]+//g')
+
+    echo "    auth users = ${USERS}" >> ./rsyncd.conf
+    echo "    secrets file = /etc/rsyncd.secrets" >> ./rsyncd.conf
+fi
 
 exec /usr/bin/rsync --daemon --no-detach "$@"
