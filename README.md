@@ -65,7 +65,7 @@ docker run -d -p <port>:873 --name rsyncd \
 ```
 
 ### ALLOW
-By default, rsync server accepts a connection only from `192.168.0.0/16` and `172.12.0.0/12` for security reasons.
+By default, rsync server accepts a connection only from `192.168.0.0/16`, `172.12.0.0/12` and `10.0.0.0/8` for security reasons.
 You can override via an environment variable like this:
 
 ```
