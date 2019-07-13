@@ -10,7 +10,7 @@ if [ "${GROUP}" != "nogroup" ]; then
         groupadd -g ${GROUP} rsyncdgroup
 fi
 if [ "${OWNER}" != "nobody" ]; then
-        groupadd -u ${OWNER} -G rsyncdgroup rsyncduser
+        useradd -u ${OWNER} -G rsyncdgroup rsyncduser
 fi
 
 [ -f /etc/rsyncd.conf ] || cat <<EOF > /etc/rsyncd.conf
