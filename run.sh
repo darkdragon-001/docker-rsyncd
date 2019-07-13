@@ -1,6 +1,7 @@
 #!/bin/sh
 
 VOLUME=${VOLUME:-"volume"}
+READONLY=${READONLY:-false}
 ALLOW=${ALLOW:-192.168.0.0/16 172.16.0.0/12}
 OWNER=${OWNER:-nobody}
 GROUP=${GROUP:-nogroup}
@@ -22,7 +23,7 @@ log file = /dev/stdout
 [${VOLUME}]
     hosts deny = *
     hosts allow = ${ALLOW}
-    read only = false
+    read only = ${READONLY}
     path = /volume
     comment = ${VOLUME}
 EOF

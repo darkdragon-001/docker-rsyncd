@@ -44,6 +44,16 @@ rsync rsync://<docker>:<port>/
 backup          backup
 ```
 
+### READ ONLY
+By default, volumes are exposed read-write. If you want to protect them read-only, set the environment variable.
+
+Example :
+```
+docker run -d -p <port>:873 --name rsyncd \
+              -e READONLY="true" \
+              quay.io/swi-infra/rsyncd
+```
+
 ### ALLOW
 By default, rsync server accepts a connection only from `192.168.0.0/16` and `172.12.0.0/12` for security reasons.
 You can override via an environment variable like this:
