@@ -14,7 +14,7 @@ if [ "${OWNER}" != "nobody" ]; then
         useradd -u ${OWNER} -G rsyncdgroup rsyncduser
 fi
 
-[ -f /etc/rsyncd.conf ] || cat <<EOF > /etc/rsyncd.conf
+cat <<EOF > /etc/rsyncd.conf
 uid = ${OWNER}
 gid = ${GROUP}
 use chroot = yes
@@ -28,4 +28,4 @@ log file = /dev/stdout
     comment = ${VOLUME}
 EOF
 
-exec /usr/bin/rsync --no-detach --daemon --config /etc/rsyncd.conf "$@"
+exec /usr/bin/rsync --daemon --no-detach "$@"
