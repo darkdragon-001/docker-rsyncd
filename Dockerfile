@@ -1,5 +1,5 @@
 FROM alpine
-MAINTAINER broussel
+MAINTAINER darkdragon-001
 
 RUN apk add --no-cache rsync && \
     rm -f /etc/rsyncd.conf
