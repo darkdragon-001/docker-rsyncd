@@ -31,13 +31,13 @@ EOF
 
 # create authentification information to rsync daemon
 if [ -n "${USERS}" ]; then
-    echo ${USERS} | tr ',' '\n' > ./rsyncd.secrets
-    chmod 400 ./rsyncd.secrets
-    chown "${USER}":"${GROUP}" ./rsyncd.secrets
+    echo ${USERS} | tr ',' '\n' > /etc/rsyncd.secrets
+    chmod 400 /etc/rsyncd.secrets
+    chown "${USER}":"${GROUP}" /etc/rsyncd.secrets
     USERS=$(echo ${USERS} | sed -r 's/:[^,]+//g')
 
-    echo "    auth users = ${USERS}" >> ./rsyncd.conf
-    echo "    secrets file = /etc/rsyncd.secrets" >> ./rsyncd.conf
+    echo "    auth users = ${USERS}" >> /etc/rsyncd.conf
+    echo "    secrets file = /etc/rsyncd.secrets" >> /etc/rsyncd.conf
 fi
 
 exec /usr/bin/rsync --daemon --no-detach "$@"
