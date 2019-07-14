@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# set default variables
 VOLUME=${VOLUME:-"volume"}
 READONLY=${READONLY:-false}
 ALLOW=${ALLOW:-192.168.0.0/16 172.16.0.0/12 10.0.0.0/8}
@@ -15,6 +16,7 @@ if [ "${OWNER}" != "nobody" ]; then
         useradd -u ${OWNER} -G rsyncdgroup rsyncduser
 fi
 
+# generate config file
 cat <<EOF > /etc/rsyncd.conf
 uid = ${OWNER}
 gid = ${GROUP}
@@ -40,4 +42,13 @@ if [ -n "${USERS}" ]; then
     echo "    secrets file = /etc/rsyncd.secrets" >> /etc/rsyncd.conf
 fi
 
+# unset environment variables
+unset VOLUME
+unset READONLY
+unset ALLOW
+unset USERS
+unset OWNER
+unset GROUP
+
+# start rsync daemon
 exec /usr/bin/rsync --daemon --no-detach "$@"
